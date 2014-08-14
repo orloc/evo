@@ -1,0 +1,14 @@
+{
+    "name" : "Evo",
+    "description": "A first try at an evolution simulator",
+    "authors": [
+        {
+            "name": "Grant Tepper",
+            "email": "grant.tepper@gmail.com",
+            "role": "Lead"
+        }
+    ],
+    "autoload" : { 
+        "psr-4": {"Evo\\":"src/"}
+     }
+}
