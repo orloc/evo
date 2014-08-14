@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator;
+namespace Evo\Generator;
 
 use Evo\Model;
 
@@ -13,6 +13,8 @@ class WorldGenerator {
     }
 
     public function generate(){
+        $world = new Model\World;
+
 
     }
 
