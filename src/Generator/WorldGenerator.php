@@ -4,19 +4,9 @@ namespace Evo\Generator;
 
 use Evo\Model;
 
-class WorldGenerator { 
+class WorldGenerator implements GeneratorInterface { 
 
-    protected $config;
-
-    public function __construct(array $config){
-        $this->config = $config;
+    public function getName(){
+        return '\Evo\Model\World';
     }
-
-    public function generate(){
-        $world = new Model\World;
-
-
-    }
-
-
 }
