@@ -6,8 +6,11 @@ abstract class AbstractGenerator {
 
     protected $config;
 
-    public function __construct(array $config = []){
+    protected $use_setters;
+
+    public function __construct(array $config = [], $use_setters = true){
         $this->config = $config;
+        $this->use_setters = $use_setters;
     }
 
     public function generate(){
@@ -22,13 +25,25 @@ abstract class AbstractGenerator {
 
         foreach( $validProperties as $p) { 
             $name = $p->getName();
-            $action = 'set'.$this->camelize($name);
-            $value = mt_rand(min($this->config[$name]), max($this->config[$name]));
-            
-            $entity->$action($value);
+            if ($this->use_setters) {
+                $action ='set'.$this->camelize($name);
+                $entity->$action(static::getComputedValue($this->getConfig(), $name));
+            } else { 
+                $entity->$name = static::getComputedValue($this->getConfig(), $name);
+            }
         }
 
         return $entity;
+    }
+
+    protected function getComputedValue(array $config, $property){
+        return mt_rand(min($config[$property]), max($config[$property]));
+    }
+
+    public function getConfig(){
+        return array_merge($this->config, [
+            'use_setters' =>$this->use_setters
+        ]);
     }
 
     public function camelize($word){
