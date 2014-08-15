@@ -7,25 +7,22 @@ if (!$loader = include __DIR__.'/vendor/autoload.php'){
 use Evo\Provider;
 
 $app = new \Cilex\Application('EvoGen');
-
 $app['evo_config'] = include_once __DIR__.'/config/config.php';
 
 if (!isset($app['evo_config'])){
     throw new \Exception('Configuration not present');
 }
 
-$app['evo'] = [
-    'world.generator' => $app->register(new Provider\WorldGeneratorProvider()),
-    'creature.generator' => $app->register(new Provider\CreatureGeneratorProvider())
-];
+$app->register(new Provider\WorldGeneratorProvider());
+$app->register(new Provider\CreatureGeneratorProvider());
 
-var_dump(get_class($app['evo']['world.generator'])->generate());die;
+$app->run();
 
-$creatureGenerator = new Evo\Generator\CreatureGenerator($config['creature_attribute'], true);
+//$creatureGenerator = new Evo\Generator\CreatureGenerator($config['creature_attribute'], true);
 
-$creatureGenerator->setPointLimit($config['world']['point_limit']);
+//$creatureGenerator->setPointLimit($config['world']['point_limit']);
 
-$renderer = new Evo\ConsoleColors();
+//$renderer = new Evo\ConsoleColors();
 
 /*
 for ($i = 0; $i < 1000; $i++){
