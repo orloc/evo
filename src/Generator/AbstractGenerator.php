@@ -2,11 +2,13 @@
 
 namespace Evo\Generator;
 
-abstract class AbstractGenerator { 
+abstract class AbstractGenerator {
 
     protected $config;
 
     protected $use_setters;
+
+    protected $entity;
 
     public function __construct(array $config = [], $use_setters = true){
         $this->config = $config;
@@ -17,19 +19,19 @@ abstract class AbstractGenerator {
         $reflector = new \ReflectionClass($this->getName());
         $entityName = $this->getName();
 
-        $entity = new $entityName();
+        $this->entity = new $entityName();
 
         $validProperties = array_filter($reflector->getProperties(), function(\ReflectionProperty $property){
             return isset($this->config[$property->getName()]);
-        }); 
+        });
 
-        foreach( $validProperties as $p) { 
+        foreach( $validProperties as $p) {
             $name = $p->getName();
             if ($this->use_setters) {
                 $action ='set'.$this->camelize($name);
-                $entity->$action(static::getComputedValue($this->getConfig(), $name));
-            } else { 
-                $entity->$name = static::getComputedValue($this->getConfig(), $name);
+                $this->entity->$action(static::getComputedValue($this->getConfig(), $name));
+            } else {
+                $this->entity->$name = static::getComputedValue($this->getConfig(), $name);
             }
         }
 
@@ -44,6 +46,10 @@ abstract class AbstractGenerator {
         return array_merge($this->config, [
             'use_setters' =>$this->use_setters
         ]);
+    }
+
+    public function getEntity(){
+        return $this->entity;
     }
 
     public function camelize($word){

@@ -2,7 +2,7 @@
 
 namespace Evo\Generator;
 
-class CreatureGenerator extends AbstractGenerator implements GeneratorInterface { 
+class CreatureGenerator extends AbstractGenerator implements GeneratorInterface {
 
     protected $point_total;
 
@@ -10,5 +10,7 @@ class CreatureGenerator extends AbstractGenerator implements GeneratorInterface 
         return '\Evo\Model\Creature';
     }
 
-
+    public function getComputedValue(array $config, $property){
+        var_dump($config);
+    }
 }
