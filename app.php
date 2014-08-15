@@ -16,9 +16,8 @@ if (!isset($app['evo_config'])){
 $app->register(new Provider\WorldGeneratorProvider());
 $app->register(new Provider\CreatureGeneratorProvider());
 
-$app->run();
+$app->run(true);
 
-//$creatureGenerator = new Evo\Generator\CreatureGenerator($config['creature_attribute'], true);
 
 //$creatureGenerator->setPointLimit($config['world']['point_limit']);
 
