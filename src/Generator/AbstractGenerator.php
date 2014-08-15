@@ -21,6 +21,8 @@ abstract class AbstractGenerator {
 
         $this->entity = new $entityName();
 
+        $this->preGenerate();
+
         $validProperties = array_filter($reflector->getProperties(), function(\ReflectionProperty $property){
             return isset($this->config[$property->getName()]);
         });
@@ -29,16 +31,20 @@ abstract class AbstractGenerator {
             $name = $p->getName();
             if ($this->use_setters) {
                 $action ='set'. self::camelize($name);
-                $this->entity->$action($this->getComputedValue($this->getConfig(), $name, $entity));
+                $this->getEntity()->$action($this->getComputedValue($this->getConfig(), $name));
             } else {
-                $this->entity->$name = $this->getComputedValue($this->getConfig(), $name, $entity);
+                $this->getEntity()->$name = $this->getComputedValue($this->getConfig(), $name);
             }
         }
 
-        return $entity;
+        return $this;
     }
 
-    protected function getComputedValue(array $config, $property, $entity){
+    protected function preGenerate(){
+        return;
+    }
+
+    protected function getComputedValue(array $config, $property){
         return mt_rand(min($config[$property]), max($config[$property]));
     }
 
