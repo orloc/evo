@@ -2,7 +2,7 @@
 
 namespace Evo\Model;
 
-class World { 
+class World {
 
     protected $population;
 

@@ -8,6 +8,12 @@ class CreatureGenerator extends AbstractGenerator implements GeneratorInterface 
 
     protected $point_limit;
 
+    protected $valid_keys = [
+        'strength',
+        'constitution',
+        'speed'
+    ];
+
     public function getName(){
         return '\Evo\Model\Creature';
     }
@@ -26,6 +32,23 @@ class CreatureGenerator extends AbstractGenerator implements GeneratorInterface 
         $entity->setPointLimit($this->getPointLimit());
     }
 
+    protected function postGenerate(){
+        $creature = $this->getEntity();
+        if ($creature->getCurrentPoints() < $this->getPointLimit()){
+            $reflectionCreature = new \ReflectionClass($creature);
+            while ($creature->getCurrentPoints() < $this->getPointLimit()){
+                foreach ($this->valid_keys as $k){
+                    $name = parent::camelize($k);
+                    $reflectionCreature->getMethod(sprintf('set%s', $name))
+                        ->invoke($creature,
+                            $reflectionCreature->getMethod(sprintf('get%s', $name))
+                                ->invoke($creature) + 1
+                    );
+                }
+            }
+        }
+    }
+
     protected function getComputedValue(array $config, $property){
         $creature = $this->getEntity();
         if ($creature->hasExtraPoints()){
@@ -39,12 +62,7 @@ class CreatureGenerator extends AbstractGenerator implements GeneratorInterface 
     }
 
     protected function balancePoints(Creature $creature, $property){
-        $valid_keys = [
-            'strength',
-            'constitution',
-            'speed'
-        ];
-
+        $valid_keys = $this->valid_keys;
         if (in_array($property, $valid_keys)){
             if (isset($valid_keys[$property]) && !is_numeric($valid_keys[$property])){
                 unset($valid_keys[$property]);
@@ -56,7 +74,7 @@ class CreatureGenerator extends AbstractGenerator implements GeneratorInterface 
                 $oldVal = $reflectionCreature->getMethod(sprintf('get%s', $name))
                     ->invoke($creature);
 
-                $newVal = $oldVal - ($oldVal * .2);
+                $newVal = $oldVal - 1; //($oldVal * .2);
 
                 $reflectionCreature->getMethod(sprintf('set%s', $name))
                     ->invoke($creature, $newVal);

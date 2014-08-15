@@ -8,7 +8,11 @@
             "role": "Lead"
         }
     ],
-    "autoload" : { 
+    "require" : {
+        "cilex/cilex": "1.0.*@dev",
+        "monolog/monolog" : "1.0.0"
+    },
+    "autoload" : {
         "psr-4": {"Evo\\":"src/"}
      }
 }

@@ -37,10 +37,16 @@ abstract class AbstractGenerator {
             }
         }
 
+        $this->postGenerate();
+
         return $this;
     }
 
     protected function preGenerate(){
+        return;
+    }
+
+    protected function postGenerate(){
         return;
     }
 

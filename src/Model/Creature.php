@@ -18,14 +18,13 @@ class Creature extends AbstractEntity {
 
     protected $point_limit;
 
-    protected $birth_day;
+    protected $birth_date;
 
     public function __construct(){
         $this->age = 0;
         $this->health = 100;
         $this->energy = 20;
-
-        $this->birth_day = new \DateTime();
+        $this->birth_date = new \DateTime();
     }
 
     public function getCurrentPoints() {
@@ -72,4 +71,22 @@ class Creature extends AbstractEntity {
         return $this;
     }
 
+    public function getAge(){
+        return $this->age;
+
+    }
+
+    public function setAge($age){
+        $this->age = $age;
+        return $this;
+    }
+
+    public function getBirthDate(){
+        return $this->birth_day;
+    }
+
+    public function setBirthDate($date){
+        $this->birth_date = $date;
+        return $this;
+    }
 }
