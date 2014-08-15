@@ -2,7 +2,7 @@
 
 namespace Evo\Model;
 
-class Creature extends AbstractEntity { 
+class Creature extends AbstractEntity {
 
     protected $strength;
 
@@ -16,6 +16,8 @@ class Creature extends AbstractEntity {
 
     protected $age;
 
+    protected $point_limit;
+
     protected $birth_day;
 
     public function __construct(){
@@ -24,6 +26,23 @@ class Creature extends AbstractEntity {
         $this->energy = 20;
 
         $this->birth_day = new \DateTime();
+    }
+
+    public function getCurrentPoints() {
+        return $this->getConstitution() + $this->getSpeed() + $this->getStrength();
+    }
+
+    public function hasExtraPoints(){
+        return  $this->getCurrentPoints() <= $this->getPointLimit();
+    }
+
+    public function getPointLimit(){
+        return $this->point_limit;
+    }
+
+    public function setPointLimit($point_limit){
+        $this->point_limit = $point_limit;
+        return $this;
     }
 
     public function getStrength(){

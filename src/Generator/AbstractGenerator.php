@@ -28,17 +28,17 @@ abstract class AbstractGenerator {
         foreach( $validProperties as $p) {
             $name = $p->getName();
             if ($this->use_setters) {
-                $action ='set'.$this->camelize($name);
-                $this->entity->$action(static::getComputedValue($this->getConfig(), $name));
+                $action ='set'. self::camelize($name);
+                $this->entity->$action($this->getComputedValue($this->getConfig(), $name, $entity));
             } else {
-                $this->entity->$name = static::getComputedValue($this->getConfig(), $name);
+                $this->entity->$name = $this->getComputedValue($this->getConfig(), $name, $entity);
             }
         }
 
         return $entity;
     }
 
-    protected function getComputedValue(array $config, $property){
+    protected function getComputedValue(array $config, $property, $entity){
         return mt_rand(min($config[$property]), max($config[$property]));
     }
 
@@ -52,7 +52,7 @@ abstract class AbstractGenerator {
         return $this->entity;
     }
 
-    public function camelize($word){
+    public static function camelize($word){
         $ret = '';
         foreach(explode('_', $word) as $k){
             $ret .= ucfirst($k);
