@@ -35,16 +35,38 @@ class World {
 
     }
 
+    public function getResources(){
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource){
+        $this->resources[] = $resource;
+    }
+
     public function getYearLength(){
         return $this->year_length;
+    }
+
+    public function setYearLength($length){
+        $this->year_length = $length;
     }
 
     public function getPopulationCap(){
         return $this->population_cap;
     }
 
+    public function setPopulationCap($cap){
+        $this->population_cap = $cap;
+        return $this;
+    }
+
     public function getStartingPopulation(){
         return $this->starting_population;
+    }
+
+    public function setStartingPopulation($population) {
+        $this->starting_population = $population;
+        return $population;
     }
 
     public function getGrowthRate(){
