@@ -4,11 +4,9 @@ namespace Evo\Model;
 
 class World {
 
-    protected $population;
+    protected $creatures;
 
     protected $resources;
-
-    protected $point_limit;
 
     protected $year_length;
 
@@ -25,18 +23,16 @@ class World {
         $this->population = $this->resources = [];
     }
 
-    public function getPopulation(){
-        return $this->population;
+    public function getCreatures(){
+        return $this->creatures;
     }
 
-
-    public function getPointLimit(){
-        return $this->point_limit;
+    public function addCreature(Creature $creature){
+        $this->creatures[] = $creature;
     }
 
-    public function setPointLimit($limit){
-        $this->point_limit = $limit;
-        return $this;
+    public function removeCreature(Creature $creature){
+
     }
 
     public function getYearLength(){

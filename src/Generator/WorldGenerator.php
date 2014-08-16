@@ -10,5 +10,7 @@ class WorldGenerator extends AbstractGenerator implements GeneratorInterface {
         return '\Evo\Model\World';
     }
 
-
+    public function getComputedValue(array $config, $property) {
+        return isset($config[$property]) ? $config[$property] : 0;
+    }
 }
